@@ -45,3 +45,18 @@ export const createProject = async (req, res)=>{
         })
     }
 }
+
+export const getAllProject = async(req, res) => {
+    try {
+        const projects = await Project.find({})
+        return res.status(200).json({
+            message : "projects fetched sussessfully",
+            projects
+        })
+    } catch (error) {
+        return res.status(400).json({
+            message : "Error while fetching project",
+            error
+        })
+    }
+}
