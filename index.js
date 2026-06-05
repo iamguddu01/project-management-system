@@ -10,7 +10,7 @@ app.use(express.json())
 
 initDB() // DB connnection
 app.use("/user", userRoutes)
-app.use("/project", projectRoutes)
+app.use(projectRoutes)
 
 
 app.listen(process.env.PORT, async()=>{

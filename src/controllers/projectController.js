@@ -60,3 +60,63 @@ export const getAllProject = async(req, res) => {
         })
     }
 }
+
+export const updateProject = async (req, res)=>{
+    const projectId = req.params?.id;
+    let body = req.body || {};
+    if(!projectId){
+        return res.status(400).json({
+            message : "Project Id is required"
+        })
+    }
+
+    const allowedBody = {
+        title : true,
+        description : true,
+        createdBy : true,
+        teamMembers : true
+    };
+
+    let payloadForCreate = {};
+
+    for(const key in body){
+        if(allowedBody?.[key]){
+            payloadForCreate[key] = body[key]
+        }
+    }
+
+    const project = await Project.findByIdAndUpdate(projectId, {
+        ...payloadForCreate
+    });
+    if(!project){
+        return res.status(400).json({
+            message : "Project does not exist"
+        })
+    }
+
+    return res.status(200).json({
+        message : "project updated successfully",
+        project
+    })
+}
+
+export const deleteProject = async(req, res)=>{
+    const projectId = req.params?.id;
+    if(!projectId){
+        return res.status(400).json({
+            message : "Project Id is required"
+        })
+    }
+
+    const project = await Project.findByIdAndDelete(projectId);
+    if(!project){
+        return res.status(400).json({
+            message : "Project does not exist"
+        })
+    }
+
+    return res.status(200).json({
+        message : "project deleted successfully",
+        project
+    })
+}
