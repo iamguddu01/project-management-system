@@ -8,12 +8,17 @@ const taskSchema = new Schema({
     description : {
         type : String,
     },
+    projectId :{
+        type : mongoose.Schema.ObjectId,
+        ref : "Project"
+    },
     createdBy : {
         type : mongoose.Schema.ObjectId,
         ref : "user"
     },
     status : {
         type : String,
+        default : "pending"
     },
     assignedTo : {
         type : mongoose.Schema.ObjectId,
